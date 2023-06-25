@@ -1,1 +1,3 @@
-print('Hola')
+import funciones
+
+funciones.agregar()

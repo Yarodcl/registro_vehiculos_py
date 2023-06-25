@@ -1,3 +1,5 @@
+autos = []  #Guarda los autos ingresados, no sé bien como usarlo como un array de numpy.
+
 def grabar():
     while True:
         def verificar_patente(patente):
@@ -9,9 +11,7 @@ def grabar():
         def verificar_precio(precio): #Vericia precio
             if precio >= 500000:
                 return True
-            
-        autos = [] #Guarda los autos ingresados, no sé bien como usarlo como un array de numpy. No funciona, entiendo que los diccionarios son unicos ¿Pero no puedo meter diferentes en un array o lista?
-  
+    
         auto = { #Diccionario para guardar los autos
             'Tipo' : input('Ingrese el tipo de auto: '),
             'Patente': '',
@@ -41,6 +41,7 @@ def grabar():
         
         while True: #ingreso de patente
             patente = input('Ingrese la patente del vehiculo: ')
+            patente = patente.upper()
             if verificar_patente(patente) == True:
                 auto['Patente'] = patente
                 break
@@ -72,26 +73,24 @@ def grabar():
                 print('Datos no validos, reintentar')
                 continue
 
+ 
+        verificacion = input('¿El vehiculo posee multas?(S/N): ') #Verificamos que posea multas
+        verificacion = verificacion.upper()
         while True: #Ingreso de multas
-
-            verificacion = input('¿El vehiculo posee multas?(S/N): ') #Verificamos que posea multas
-            verificacion = verificacion.upper()
             if verificacion == 'S': #Si tiene, ingresamos la fecha y validamos que el valor esté en formato integeR
-                while True:
-                    fecha_multa = input('Ingrese la fecha de la multa en formato (DD/MM/AA): ')
-                    monto_multa = input('Ingrese el valor de la multa: ')
-                    try:
-                        monto_multa = int(monto_multa)
-                    except:
-                        print('Los datos deben ser numericos')
-                        continue
+                fecha_multa = input('Ingrese la fecha de la multa en formato (DD/MM/AA): ')
+                monto_multa = input('Ingrese el valor de la multa: ')
+                try:
+                    monto_multa = int(monto_multa)
+                except:
+                    print('Los datos deben ser numericos')
+                    continue
 
-                    auto['Multas']['Fecha'].append(fecha_multa) #Agregamos a la lista los datos de las fechas ingresadas
-                    auto['Multas']['Monto'].append(monto_multa) #Agregamos a la lista los datos de los valores ingresados
+                auto['Multas']['Fecha'].append(fecha_multa) #Agregamos a la lista los datos de las fechas ingresadas
+                auto['Multas']['Monto'].append(monto_multa) #Agregamos a la lista los datos de los valores ingresados
 
-                    seguir = input('¿Desea seguir ingresando multas?(S/N): ') #Verificación para saber si el usuario quiere seguir agregando multas
-                    seguir = seguir.upper()
-                    break
+                seguir = input('¿Desea seguir ingresando multas?(S/N): ') #Verificación para saber si el usuario quiere seguir agregando multas
+                seguir = seguir.upper()
 
                 if seguir == 'S': #Seguir en el ingreso de multas en caso de generar más
                     continue
@@ -100,12 +99,9 @@ def grabar():
                 else: 
                     print('Datos no validos, reintentar')
                     continue
-
+            
             elif verificacion == 'N': #Salir del ingreso de multas en caso de no tener
                 break
-            else:
-                print('Datos no validos, reintentar')
-                continue
 
         autos.append(auto)        
         ingreso = input('¿Desea seguir ingresando autos? (S/N)')
@@ -114,8 +110,14 @@ def grabar():
             continue
         elif ingreso == 'N':
             break
-        
 
-    print(autos)
+def buscar_vehiculo():
+    buscar = input("Ingrese la patente a buscar: ")
+    for auto in autos:
+        if 'Patente' in auto and auto['Patente'] == buscar:
+            print(auto)
+            break
 
 grabar()
+buscar_vehiculo()
+
