@@ -1,6 +1,6 @@
 autos = []  #Guarda los autos ingresados, no sé bien como usarlo como un array de numpy.
 
-def grabar():
+def grabar_vehículo():
     while True:
         def verificar_patente(patente):
             return 6 >= len(patente) #Queria intentar verificar que fueran 4 letras y 2 números, encontre una forma con expresiónes regulares pero no entendí demasiado.
@@ -118,6 +118,7 @@ def buscar_vehiculo():
             print(auto)
             break
 
-grabar()
-buscar_vehiculo()
 
+grabar_vehículo()
+buscar_vehiculo()
+imprimir_Certificados()
