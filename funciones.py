@@ -55,7 +55,7 @@ def grabar_vehiculo():
                 auto['Patente'] = patente
                 break
             else:
-                print('Datos no validos, reintentar')
+                print('Patente excede caracteres, reintentar')
                 continue
 
         while True: #Ingreso de marca
@@ -64,7 +64,7 @@ def grabar_vehiculo():
                 auto['Marca'] = marca
                 break
             else:
-                print('Datos no validos, reintentar')
+                print('El nombre no cumple las caracteristicas, reintentar')
                 continue
         
         while True: #Ingreso de precio
@@ -72,7 +72,7 @@ def grabar_vehiculo():
             try:
                 precio = int(precio)
             except:
-                print('Datos no validos, reintentar')            
+                print('Debe ser superior a 5 millones, reintentar')            
                 continue
 
             if verificar_precio(precio) == True:
@@ -122,11 +122,12 @@ def grabar_vehiculo():
 
 def buscar_vehiculo():
     while True:
-        buscar = input("Ingrese la patente del Vehiculo: ")
+        patente = input("Ingrese la patente del Vehiculo: ")
+        patente = patente.upper()
         print('Los datos del auto son los siguientes: ')
         try:
             for auto in autos:
-                if 'Patente' in auto and auto['Patente'] == buscar:
+                if 'Patente' in auto and auto['Patente'] == patente:
                     pprint.pprint(auto)
                     break
             break
@@ -159,10 +160,9 @@ def imprimir_certificados():
 
     print(f'Los certificados disponibles son los iguientes: ')
 
-    pprint.pprint(certificados)
 
-    #for llave, clave in certificados.items(): #Imprime el objeto certificado de una manera legible
-        #print(f'{llave} = ${clave}')
+    for llave, clave in certificados.items(): #Imprime el objeto certificado de una manera legible
+        print(f'{llave} = ${clave}')
 
     while True: #Solicita al usuario el certificado que desea, además verifica si se encuentra disponible
         certificado_u = input('¿Qué certificado desea imprimir?: ') 
