@@ -1,17 +1,26 @@
+import random
+import pprint
+
 autos = []  #Guarda los autos ingresados, no sé bien como usarlo como un array de numpy.
 
-def grabar_vehículo():
+
+#Funciones menores
+def verificar_patente(patente):
+     return 6 >= len(patente) #Queria intentar verificar que fueran 4 letras y 2 números, encontre una forma con expresiónes regulares pero no entendí demasiado.
+
+def verificar_marca(marca):
+    return 5 <= len(marca) <= 12 #Hice estas tres funciones para entenderme un poco más, creo que dividiré el codigo en una función por archivo
+
+def verificar_precio(precio): #Vericia precio
+    if precio >= 500000:
+        return True
+
+def mostrar_certificados(): #Muestra los certificados
+    return
+
+#Funciones mayores
+def grabar_vehiculo():
     while True:
-        def verificar_patente(patente):
-            return 6 >= len(patente) #Queria intentar verificar que fueran 4 letras y 2 números, encontre una forma con expresiónes regulares pero no entendí demasiado.
-
-        def verificar_marca(marca):
-            return 5 <= len(marca) <= 12 #Hice estas tres funciones para entenderme un poco más, creo que dividiré el codigo en una función por archivo
-
-        def verificar_precio(precio): #Vericia precio
-            if precio >= 500000:
-                return True
-    
         auto = { #Diccionario para guardar los autos
             'Tipo' : input('Ingrese el tipo de auto: '),
             'Patente': '',
@@ -112,13 +121,70 @@ def grabar_vehículo():
             break
 
 def buscar_vehiculo():
-    buscar = input("Ingrese la patente a buscar: ")
+    buscar = input("Ingrese la patente del Vehiculo: ")
+    print('Los datos del auto son los siguientes: ')
     for auto in autos:
         if 'Patente' in auto and auto['Patente'] == buscar:
             print(auto)
             break
+        else:
+            print('La patente ingresada no se encuentra registrada')
 
+def imprimir_certificados():
 
-grabar_vehículo()
+    certificados = { #Objeto certificados con valores en 0.
+    'CONTAMINANTES' : 0,
+    'ANOTACIONES VIGENTES' : 0,
+    'MULTAS': 0 
+
+    }
+
+    for valor in certificados:
+        certificados[valor] = random.randint(1500, 3500) #Randomizar valores de los certificados según rango dado en ejercicio
+
+ 
+    patente = input('Ingresa la patente del Vehículo: ') 
+    for auto in autos:
+        if verificar_patente(patente) == True and patente in autos: #Verificacion que cumpla los digitos y que exista en el array de autos
+            break
+        else:
+            print("La patente no cumple las condiciones necesarias")
+            continue
+
+    print(f'Los certificados disponibles son los iguientes: ')
+
+    for llave, clave in certificados.items(): #Imprime el objeto certificado de una manera legible
+        print(f'{llave} = ${clave}')
+
+    while True:
+        certificado_u = input('¿Qué certificado desea imprimir?: ')
+        certificado_u = certificado_u.upper()
+        if certificado_u in certificados.keys():
+            break
+        else:
+            print('Certificado no disponible')
+            continue
+
+    print(f'Su certificado de {certificado_u} se encuentra en cola de impresión... ')
+    print(f'La patente del vehiculo es: {patente}')
+    for auto in autos:
+        if auto['Patente'] == patente:
+            dueño = auto['Dueño']
+            print('Datos del dueño: ')
+            print('Nombre: ', dueño['Nombre'])
+            print('Apellido: ', dueño['Apellido'])
+            print('RUN: ', dueño['RUN'])
+        else:
+            print('Patente no se encuentra registrada')
+    if certificado_u == 'MULTAS':
+        print('Multas del vehiculo')
+        for auto in autos:
+            if auto['Patente'] == patente:
+                multas = auto['Multas']
+                print('Fechas: ', multas['Fecha'])
+                print('Montos: ', multas['Monto'])
+                break
+
+grabar_vehiculo()
 buscar_vehiculo()
-imprimir_Certificados()
+imprimir_certificados()
