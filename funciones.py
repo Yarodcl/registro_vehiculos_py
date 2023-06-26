@@ -1,5 +1,5 @@
 import random
-import pprint
+import pprint #Llamo la función print para imprimir los diccionarios de una manera mas legible
 
 autos = []  #Guarda los autos ingresados, no sé bien como usarlo como un array de numpy.
 
@@ -121,15 +121,18 @@ def grabar_vehiculo():
             break
 
 def buscar_vehiculo():
-    buscar = input("Ingrese la patente del Vehiculo: ")
-    print('Los datos del auto son los siguientes: ')
-    for auto in autos:
-        if 'Patente' in auto and auto['Patente'] == buscar:
-            print(auto)
+    while True:
+        buscar = input("Ingrese la patente del Vehiculo: ")
+        print('Los datos del auto son los siguientes: ')
+        try:
+            for auto in autos:
+                if 'Patente' in auto and auto['Patente'] == buscar:
+                    pprint.pprint(auto)
+                    break
             break
-        else:
-            print('La patente ingresada no se encuentra registrada')
-
+        except:
+            print('La patente no se encuentra registrada')
+            continue
 def imprimir_certificados():
 
     certificados = { #Objeto certificados con valores en 0.
@@ -142,22 +145,27 @@ def imprimir_certificados():
     for valor in certificados:
         certificados[valor] = random.randint(1500, 3500) #Randomizar valores de los certificados según rango dado en ejercicio
 
- 
-    patente = input('Ingresa la patente del Vehículo: ') 
-    for auto in autos:
-        if verificar_patente(patente) == True and patente in autos: #Verificacion que cumpla los digitos y que exista en el array de autos
+    while True:
+        patente = input('Ingresa la patente del Vehículo: ')
+        patente = patente.upper() 
+        try:
+            for auto in autos:
+                if verificar_patente(patente) == True and patente in autos: #Verificacion que cumpla los digitos y que exista en el array de autos
+                    break
             break
-        else:
-            print("La patente no cumple las condiciones necesarias")
+        except:
+            print('La patente no cumple las condicions necesarias o no se encuentra registrada')
             continue
 
     print(f'Los certificados disponibles son los iguientes: ')
 
-    for llave, clave in certificados.items(): #Imprime el objeto certificado de una manera legible
-        print(f'{llave} = ${clave}')
+    pprint.pprint(certificados)
 
-    while True:
-        certificado_u = input('¿Qué certificado desea imprimir?: ')
+    #for llave, clave in certificados.items(): #Imprime el objeto certificado de una manera legible
+        #print(f'{llave} = ${clave}')
+
+    while True: #Solicita al usuario el certificado que desea, además verifica si se encuentra disponible
+        certificado_u = input('¿Qué certificado desea imprimir?: ') 
         certificado_u = certificado_u.upper()
         if certificado_u in certificados.keys():
             break
@@ -167,16 +175,14 @@ def imprimir_certificados():
 
     print(f'Su certificado de {certificado_u} se encuentra en cola de impresión... ')
     print(f'La patente del vehiculo es: {patente}')
-    for auto in autos:
+    for auto in autos: #Si no es un certificado de multas, imprime solo los datos del dueño y su patente
         if auto['Patente'] == patente:
             dueño = auto['Dueño']
             print('Datos del dueño: ')
             print('Nombre: ', dueño['Nombre'])
             print('Apellido: ', dueño['Apellido'])
             print('RUN: ', dueño['RUN'])
-        else:
-            print('Patente no se encuentra registrada')
-    if certificado_u == 'MULTAS':
+    if certificado_u == 'MULTAS': #Si es un certificado de multas, imprime los datos anteriores y las multas del vehiculo
         print('Multas del vehiculo: ')
         for auto in autos:
             if auto['Patente'] == patente:
@@ -185,6 +191,27 @@ def imprimir_certificados():
                 print('Montos: ', multas['Monto'])
                 break
 
-grabar_vehiculo()
-buscar_vehiculo()
-imprimir_certificados()
+def menu():
+    while True:
+        print("\n--- Menú ---")
+        print("1. Ingresar un vehiculo")
+        print("2. Buscar vehiculo")
+        print("3. Imprimir certificados")
+        print("4. Salir")
+        
+        opcion = input("Ingrese una opción: ")
+        
+        if opcion == "1":
+            grabar_vehiculo()
+        elif opcion == "2":
+            buscar_vehiculo()
+        elif opcion == "3":
+            imprimir_certificados()
+        elif opcion == "4":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción inválida. Por favor, ingrese una opción válida.")
+            continue
+
+menu()
