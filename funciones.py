@@ -177,7 +177,7 @@ def imprimir_certificados():
         else:
             print('Patente no se encuentra registrada')
     if certificado_u == 'MULTAS':
-        print('Multas del vehiculo')
+        print('Multas del vehiculo: ')
         for auto in autos:
             if auto['Patente'] == patente:
                 multas = auto['Multas']
